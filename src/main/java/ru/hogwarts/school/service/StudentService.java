@@ -9,11 +9,11 @@ import java.util.Map;
 @Service
 public class StudentService {
     private final Map<Long, Student> students = new HashMap<>();
-    private Long generatedId = 1L;
+    private Long generatedId = 0L;
 
     public Student createStudent(Student student) {
+        student.setId(++generatedId);
         students.put(generatedId, student);
-        generatedId++;
         return student;
     }
 

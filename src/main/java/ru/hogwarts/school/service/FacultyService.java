@@ -9,24 +9,24 @@ import java.util.Map;
 @Service
 public class FacultyService {
     private final Map<Long, Faculty> faculties = new HashMap<>();
-    private Long generatedId = 1L;
+    private Long generatedId = 0L;
 
-    public Faculty createStudent(Faculty faculty) {
+    public Faculty createFaculty(Faculty faculty) {
+        faculty.setId(++generatedId);
         faculties.put(generatedId, faculty);
-        generatedId++;
         return faculty;
     }
 
-    public Faculty editStudent(Faculty faculty) {
+    public Faculty editFaculty(Faculty faculty) {
         faculties.put(faculty.getId(), faculty);
         return faculty;
     }
 
-    public Faculty getStudent(Long id) {
+    public Faculty getFaculty(Long id) {
         return faculties.get(id);
     }
 
-    public Faculty removeStudent(Long id) {
+    public Faculty removeFaculty(Long id) {
         return faculties.remove(id);
     }
 }

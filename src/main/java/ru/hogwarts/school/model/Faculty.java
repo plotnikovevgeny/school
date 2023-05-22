@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Faculty {
-    private Long id;
+    private long id;
     private String name;
     private String color;
 }
