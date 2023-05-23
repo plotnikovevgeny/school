@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
-import java.util.List;
+
 @Repository
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     @Query("SELECT faculty from Faculty faculty where faculty.color= :color")
