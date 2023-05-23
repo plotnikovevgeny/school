@@ -31,23 +31,24 @@ public class StudentController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.removeStudent(id));
+        studentService.removeStudent(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudentInfo(@PathVariable Long id) {
         Student findStudent = studentService.getStudent(id);
         if (findStudent == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(findStudent);
     }
 
     @GetMapping("search/{age}")
-    public ResponseEntity<Collection<Student>> getStudentsByAge(@PathVariable Integer age) {
+    public ResponseEntity<Collection<Student>> getStudentsByAge(@PathVariable Long age) {
         Collection<Student> students = studentService.getStudentsByAge(age);
         if (students.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(students);
     }
