@@ -11,7 +11,7 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("rest/api/1/student")
+@RequestMapping("student")
 public class StudentController {
     private final StudentService studentService;
 
@@ -44,12 +44,8 @@ public class StudentController {
         return ResponseEntity.ok(findStudent);
     }
 
-    @GetMapping("search/{age}")
-    public ResponseEntity<Collection<Student>> getStudentsByAge(@PathVariable Long age) {
-        Collection<Student> students = studentService.getStudentsByAge(age);
-        if (students.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(students);
+    @GetMapping("/search/age")
+    public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam Long age) {
+        return ResponseEntity.ok(studentService.getStudentsByAge(age));
     }
 }

@@ -11,7 +11,7 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("rest/api/1/faculty")
+@RequestMapping("faculty")
 public class FacultyController {
     private final FacultyService facultyService;
 
@@ -44,12 +44,8 @@ public class FacultyController {
         return ResponseEntity.ok(findFaculty);
     }
 
-    @GetMapping("search/{color}")
-    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@PathVariable String color) {
-        Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
-        if (faculties.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(faculties);
+    @GetMapping("search/color")
+    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@RequestParam String color) {
+        return ResponseEntity.ok(facultyService.getFacultiesByColor(color));
     }
 }
