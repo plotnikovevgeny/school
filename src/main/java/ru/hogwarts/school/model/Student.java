@@ -13,5 +13,5 @@ public class Student {
     @GeneratedValue
     private Long id;
     private String name;
-    private Long age;
+    private Integer age;
 }

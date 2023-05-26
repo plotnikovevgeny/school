@@ -22,15 +22,20 @@ public class FacultyController {
 
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
-        Faculty findFaculty = facultyService.editFaculty(faculty);
+        Faculty findFaculty = facultyService.getFaculty(faculty.getId());
         if (findFaculty == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        facultyService.editFaculty(findFaculty);
         return ResponseEntity.ok(findFaculty);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
+        Faculty findFaculty = facultyService.getFaculty(id);
+        if (findFaculty == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         facultyService.removeFaculty(id);
         return ResponseEntity.ok().build();
     }

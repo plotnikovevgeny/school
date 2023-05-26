@@ -17,6 +17,7 @@ public class FacultyService {
     }
 
     public Faculty createFaculty(Faculty faculty) {
+        faculty.setId(null);
         return facultyRepository.save(faculty);
     }
 
@@ -26,7 +27,7 @@ public class FacultyService {
 
     public Faculty getFaculty(Long id) {
 
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public void removeFaculty(Long id) {

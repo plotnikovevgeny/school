@@ -22,15 +22,20 @@ public class StudentController {
 
     @PutMapping
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
-        Student findStudent = studentService.editStudent(student);
+        Student findStudent = studentService.getStudent(student.getId());
         if (findStudent == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        studentService.editStudent(findStudent);
         return ResponseEntity.ok(findStudent);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
+        Student findStudent = studentService.getStudent(id);
+        if (findStudent == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();
     }
