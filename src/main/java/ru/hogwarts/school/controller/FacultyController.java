@@ -11,7 +11,7 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("rest/api/1/faculty")
+@RequestMapping("faculty")
 public class FacultyController {
     private final FacultyService facultyService;
 
@@ -22,16 +22,22 @@ public class FacultyController {
 
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
-        Faculty findFaculty = facultyService.editFaculty(faculty);
+        Faculty findFaculty = facultyService.getFaculty(faculty.getId());
         if (findFaculty == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        facultyService.editFaculty(findFaculty);
         return ResponseEntity.ok(findFaculty);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
-        return ResponseEntity.ok(facultyService.removeFaculty(id));
+        Faculty findFaculty = facultyService.getFaculty(id);
+        if (findFaculty == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        facultyService.removeFaculty(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("{id}")
@@ -43,12 +49,8 @@ public class FacultyController {
         return ResponseEntity.ok(findFaculty);
     }
 
-    @GetMapping("search/{color}")
-    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@PathVariable String color) {
-        Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
-        if (faculties.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(faculties);
+    @GetMapping("search/color")
+    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@RequestParam String color) {
+        return ResponseEntity.ok(facultyService.getFacultiesByColor(color));
     }
 }
